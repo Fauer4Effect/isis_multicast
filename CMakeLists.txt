@@ -14,4 +14,5 @@ add_executable(isis_multicast ${sources})
 target_link_libraries(isis_multicast
   spdlog
   boost_program_options
+  boost_system
 )
