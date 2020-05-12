@@ -2,14 +2,16 @@
 
 #include <boost/asio.hpp>
 
-messages::DataMessage::DataMessage(uint32_t type, uint32_t sender,
-                                   uint32_t msg_id, uint32_t data)
-    : type{type},
+messages::DataMessage::DataMessage(uint32_t sender, uint32_t msg_id,
+                                   uint32_t data)
+    : type{1},
       sender{sender},
       msg_id{msg_id},
       data{data},
       deliverable{false},
-      final_seq{} {}
+      final_seq{},
+      acks_received{},
+      final_seq_proposer{} {}
 
 messages::DataMessage::DataMessage(std::vector<uint32_t>& buf)
     : type{ntohl(buf[0])},
@@ -17,7 +19,9 @@ messages::DataMessage::DataMessage(std::vector<uint32_t>& buf)
       msg_id{ntohl(buf[2])},
       data{ntohl(buf[3])},
       deliverable{false},
-      final_seq{} {}
+      final_seq{},
+      acks_received{},
+      final_seq_proposer{} {}
 
 void messages::DataMessage::serialize(std::vector<uint32_t>& buf) {
   buf.push_back(htonl(this->type));
@@ -26,16 +30,9 @@ void messages::DataMessage::serialize(std::vector<uint32_t>& buf) {
   buf.push_back(htonl(this->data));
 }
 
-void messages::DataMessage::mark_deliverable() { this->deliverable = true; }
-
-void messages::DataMessage::set_final_seq(uint32_t seq) {
-  this->final_seq = seq;
-}
-
-messages::AckMessage::AckMessage(uint32_t type, uint32_t sender,
-                                 uint32_t msg_id, uint32_t proposed_seq,
-                                 uint32_t proposer)
-    : type{type},
+messages::AckMessage::AckMessage(uint32_t sender, uint32_t msg_id,
+                                 uint32_t proposed_seq, uint32_t proposer)
+    : type{2},
       sender{sender},
       msg_id{msg_id},
       proposed_seq{proposed_seq},
@@ -56,10 +53,10 @@ void messages::AckMessage::serialize(std::vector<uint32_t>& buf) {
   buf.push_back(htonl(this->proposer));
 }
 
-messages::SeqMessage::SeqMessage(uint32_t type, uint32_t sender,
-                                 uint32_t msg_id, uint32_t final_seq,
+messages::SeqMessage::SeqMessage(uint32_t sender, uint32_t msg_id,
+                                 uint32_t final_seq,
                                  uint32_t final_seq_proposer)
-    : type{type},
+    : type{3},
       sender{sender},
       msg_id{msg_id},
       final_seq{final_seq},
