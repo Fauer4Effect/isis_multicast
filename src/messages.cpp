@@ -1,23 +1,35 @@
-#include <boost/asio.hpp>
-
 #include "messages.hpp"
 
+#include <boost/asio.hpp>
 
 messages::DataMessage::DataMessage(uint32_t type, uint32_t sender,
                                    uint32_t msg_id, uint32_t data)
-    : type{type}, sender{sender}, msg_id{msg_id}, data{data} {}
+    : type{type},
+      sender{sender},
+      msg_id{msg_id},
+      data{data},
+      deliverable{false},
+      final_seq{} {}
 
 messages::DataMessage::DataMessage(std::vector<uint32_t>& buf)
     : type{ntohl(buf[0])},
       sender{ntohl(buf[1])},
       msg_id{ntohl(buf[2])},
-      data{ntohl(buf[3])} {}
+      data{ntohl(buf[3])},
+      deliverable{false},
+      final_seq{} {}
 
 void messages::DataMessage::serialize(std::vector<uint32_t>& buf) {
   buf.push_back(htonl(this->type));
   buf.push_back(htonl(this->sender));
   buf.push_back(htonl(this->msg_id));
   buf.push_back(htonl(this->data));
+}
+
+void messages::DataMessage::mark_deliverable() { this->deliverable = true; }
+
+void messages::DataMessage::set_final_seq(uint32_t seq) {
+  this->final_seq = seq;
 }
 
 messages::AckMessage::AckMessage(uint32_t type, uint32_t sender,
