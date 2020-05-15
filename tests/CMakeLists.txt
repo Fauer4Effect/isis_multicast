@@ -1,9 +1,9 @@
 set(BINARY ${CMAKE_PROJECT_NAME}_test)
 
-add_subdirectory("${PROJECT_SOURCE_DIR}/googletest" "googletest")
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "googletest")
 
 include_directories(
-  "${PROJECT_SOURCE_DIR}/spdlog/include"
+  "${PROJECT_SOURCE_DIR}/extern/spdlog/include"
   "${PROJECT_SOURCE_DIR}/include"
 )
 

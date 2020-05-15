@@ -6,7 +6,7 @@ project(${This} VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_subdirectory(spdlog)
+add_subdirectory(extern/spdlog)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   option(PACKAGE_TESTS "Build the tests" ON)
@@ -23,7 +23,7 @@ find_package(Boost 1.67.0
   COMPONENTS system program_options
 )
 
-include_directories(spdlog/include include)
+include_directories(extern/spdlog/include include)
 
 FILE(GLOB sources ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
