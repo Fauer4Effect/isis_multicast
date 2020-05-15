@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
   description.add_options()("help,h", bool_switch(&is_help),
                             "display a help dialog")(
       "port,p", value<uint16_t>(),
-      "port the process will be linstening on for incoming message")(
+      "port the process will be listening on for incoming message")(
       "hostfile,z", value<std::string>(),
       "hostfile is the path to a file that contains the list of hostnames")(
       "count,c", value<int>()->default_value(0),

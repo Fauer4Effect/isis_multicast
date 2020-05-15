@@ -2,6 +2,11 @@ set(BINARY ${CMAKE_PROJECT_NAME}_test)
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/googletest" "googletest")
 
+include_directories(
+  "${PROJECT_SOURCE_DIR}/spdlog/include"
+  "${PROJECT_SOURCE_DIR}/include"
+)
+
 FILE(GLOB TEST_SOURCES *.cpp)
 
 set(SOURCES ${TEST_SOURCES})
