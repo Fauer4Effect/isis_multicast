@@ -4,8 +4,7 @@
 
 using namespace messages;
 
-DataMessage::DataMessage(uint32_t sender, uint32_t msg_id,
-                                   uint32_t data)
+DataMessage::DataMessage(uint32_t sender, uint32_t msg_id, uint32_t data)
     : type{1},
       sender{sender},
       msg_id{msg_id},
@@ -30,7 +29,7 @@ DataMessage::DataMessage(std::vector<uint32_t>& buf)
 }
 
 void DataMessage::serialize(std::vector<uint32_t>& buf) {
-  if (! buf.empty()) {
+  if (!buf.empty()) {
     throw std::runtime_error("Attempted to serialize with non empty buf");
   }
   buf.push_back(htonl(this->type));
@@ -39,8 +38,8 @@ void DataMessage::serialize(std::vector<uint32_t>& buf) {
   buf.push_back(htonl(this->data));
 }
 
-AckMessage::AckMessage(uint32_t sender, uint32_t msg_id,
-                                 uint32_t proposed_seq, uint32_t proposer)
+AckMessage::AckMessage(uint32_t sender, uint32_t msg_id, uint32_t proposed_seq,
+                       uint32_t proposer)
     : type{2},
       sender{sender},
       msg_id{msg_id},
@@ -59,7 +58,7 @@ AckMessage::AckMessage(std::vector<uint32_t>& buf)
 }
 
 void AckMessage::serialize(std::vector<uint32_t>& buf) {
-  if (! buf.empty()) {
+  if (!buf.empty()) {
     throw std::runtime_error("Attempted to serialize with non empty buf");
   }
   buf.push_back(htonl(this->type));
@@ -69,9 +68,8 @@ void AckMessage::serialize(std::vector<uint32_t>& buf) {
   buf.push_back(htonl(this->proposer));
 }
 
-SeqMessage::SeqMessage(uint32_t sender, uint32_t msg_id,
-                                 uint32_t final_seq,
-                                 uint32_t final_seq_proposer)
+SeqMessage::SeqMessage(uint32_t sender, uint32_t msg_id, uint32_t final_seq,
+                       uint32_t final_seq_proposer)
     : type{3},
       sender{sender},
       msg_id{msg_id},
@@ -90,7 +88,7 @@ SeqMessage::SeqMessage(std::vector<uint32_t>& buf)
 }
 
 void SeqMessage::serialize(std::vector<uint32_t>& buf) {
-  if (! buf.empty()) {
+  if (!buf.empty()) {
     throw std::runtime_error("Attempted to serialize with non empty buf");
   }
   buf.push_back(htonl(this->type));
