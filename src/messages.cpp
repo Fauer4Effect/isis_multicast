@@ -23,9 +23,16 @@ DataMessage::DataMessage(std::vector<uint32_t>& buf)
       deliverable{false},
       final_seq{},
       acks_received{},
-      final_seq_proposer{} {}
+      final_seq_proposer{} {
+  if (buf.size() < 4) {
+    throw std::runtime_error("Attempted to deserialize from short buf");
+  }
+}
 
 void DataMessage::serialize(std::vector<uint32_t>& buf) {
+  if (! buf.empty()) {
+    throw std::runtime_error("Attempted to serialize with non empty buf");
+  }
   buf.push_back(htonl(this->type));
   buf.push_back(htonl(this->sender));
   buf.push_back(htonl(this->msg_id));
@@ -45,9 +52,16 @@ AckMessage::AckMessage(std::vector<uint32_t>& buf)
       sender{ntohl(buf[1])},
       msg_id{ntohl(buf[2])},
       proposed_seq{ntohl(buf[3])},
-      proposer{ntohl(buf[4])} {}
+      proposer{ntohl(buf[4])} {
+  if (buf.size() < 5) {
+    throw std::runtime_error("Attempted to deserialize from short buf");
+  }
+}
 
 void AckMessage::serialize(std::vector<uint32_t>& buf) {
+  if (! buf.empty()) {
+    throw std::runtime_error("Attempted to serialize with non empty buf");
+  }
   buf.push_back(htonl(this->type));
   buf.push_back(htonl(this->sender));
   buf.push_back(htonl(this->msg_id));
@@ -69,9 +83,16 @@ SeqMessage::SeqMessage(std::vector<uint32_t>& buf)
       sender{ntohl(buf[1])},
       msg_id{ntohl(buf[2])},
       final_seq{ntohl(buf[3])},
-      final_seq_proposer{ntohl(buf[4])} {}
+      final_seq_proposer{ntohl(buf[4])} {
+  if (buf.size() < 5) {
+    throw std::runtime_error("Attempted to deserialize from short buf");
+  }
+}
 
 void SeqMessage::serialize(std::vector<uint32_t>& buf) {
+  if (! buf.empty()) {
+    throw std::runtime_error("Attempted to serialize with non empty buf");
+  }
   buf.push_back(htonl(this->type));
   buf.push_back(htonl(this->sender));
   buf.push_back(htonl(this->msg_id));
