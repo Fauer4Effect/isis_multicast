@@ -51,9 +51,6 @@ void Multicaster::handle_receive(const boost::system::error_code& error,
 
   uint32_t msg_type = ntohl(recv_buffer_[0]);
 
-  // FIXME there's something fishy with the deserialize for some reason it
-  // thinks that the length of the buffers is 1 even though we correctly sent
-  // all of the info
   switch (msg_type) {
     case 1: {
       spdlog::info("Received Data Message");
