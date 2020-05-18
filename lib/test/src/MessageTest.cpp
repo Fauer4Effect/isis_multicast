@@ -206,7 +206,7 @@ TEST(AckMessageTest, TestSerializeNonEmptyBuf) {
   uint32_t proposer{420};
   messages::AckMessage m{sender, msg_id, proposed_seq, proposer};
 
-  std::vector<uint32_t> buf{};
+  std::vector<uint32_t> buf{5};
   ASSERT_THROW(m.serialize(buf), std::runtime_error);
 }
 
@@ -312,6 +312,6 @@ TEST(SeqMessageTest, TestSerializeNonEmptyBuf) {
   uint32_t final_seq_proposer{420};
   messages::AckMessage m{sender, msg_id, final_seq, final_seq_proposer};
 
-  std::vector<uint32_t> buf{};
+  std::vector<uint32_t> buf{5};
   ASSERT_THROW(m.serialize(buf), std::runtime_error);
 }
