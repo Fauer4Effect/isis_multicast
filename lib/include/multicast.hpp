@@ -77,7 +77,7 @@ class Multicaster {
   std::string port_;
   std::vector<std::string> hosts_;
   boost::asio::ip::udp::endpoint remote_endpoint_;
-  std::vector<uint32_t> recv_buffer_{5};
+  std::vector<uint32_t> recv_buffer_;
   std::vector<messages::DataMessage*> queue_{};
   uint32_t last_seq_received_{};
   uint32_t process_id_;

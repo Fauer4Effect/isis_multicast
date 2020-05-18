@@ -13,7 +13,8 @@ Multicaster::Multicaster(std::vector<std::string>& hosts, uint16_t port,
     : socket_{io_context_, udp::endpoint{udp::v4(), port}},
       hosts_{hosts},
       port_{std::to_string(port)},
-      process_id_{process_id} {
+      process_id_{process_id},
+      recv_buffer_(5, 0) {
   start_receive();
 }
 
