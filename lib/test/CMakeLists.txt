@@ -30,7 +30,5 @@ target_link_libraries(
 )
 
 # Turn on CMake testing capabilities
-if(PACKAGE_TESTS)
-  enable_testing()
-  include(GoogleTest)
-endif()
+enable_testing()
+include(GoogleTest)

@@ -24,7 +24,5 @@ target_link_libraries(
 )
 
 #test
-if (PACKAGE_TESTS)
-  enable_testing ()
-  add_subdirectory (test)
-endif()
+enable_testing ()
+add_subdirectory (test)

@@ -29,8 +29,6 @@ set (LIBRARY_INCLUDE_PATH  ${LIBRARY_INCLUDE_PATH} PARENT_SCOPE)
 set (LIB_NAME ${LIB_NAME} PARENT_SCOPE)
 
 #test
-if (PACKAGE_TESTS)
-  enable_testing ()
-  include(GoogleTest)
-  add_subdirectory (test)
-endif()
+enable_testing ()
+include(GoogleTest)
+add_subdirectory (test)
